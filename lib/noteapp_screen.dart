@@ -124,26 +124,51 @@ class _NoteappScreenState extends State<NoteappScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(onPressed: _addNote, child: Text('Add Notes')),
+            SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: _notes.length,
-                itemBuilder: (context, index) {
-                  final notes = _notes[index];
-                  return ListTile(
-                    title: Text(notes.title),
-                    subtitle: Column(
-                      children: [
-                        Text(notes.subtitle),
-                        Text(notes.category),
-                        Text(notes.date),
-                      ],
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () => _deleteNote(notes.id),
-                    ),
-                  );
-                },
+              child: SizedBox(
+                height: 250,
+                width: 300,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+
+                  itemCount: _notes.length,
+                  itemBuilder: (context, index) {
+                    final notes = _notes[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: Colors.lightBlue,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(notes.title),
+                            Text(notes.subtitle),
+                            Text(notes.category),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(notes.date),
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () => _deleteNote(notes.id),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ],
